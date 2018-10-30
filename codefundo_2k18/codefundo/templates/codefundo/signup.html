@@ -1,0 +1,138 @@
+{% extends "codefundo/base.html" %}
+{% block main_content %}
+
+<!--
+{% if registered %}
+<h1> thankyou for registering</h1>
+<a href="http://127.0.0.1:8000/polls/user_login/" >LOGIN</a>    
+
+{% else %}
+<div class="container-fluid image">
+
+ <form method="POST" action="/polls/signup/" enctype="multipart/form-data">{% csrf_token %}
+    {{ auth.non_field_errors }}
+   <div class="signup" >
+        <h1 style="font-size: 4em;">register here :</h1><br>
+  
+<div style="font-size: 1.5em ; color: white">
+        <div class="row">
+       <div class="col-lg-3">
+        <label  for="username">username :</label></div>
+        <div class="col-lg-3" >{{auth.username}}</div>
+    </div>
+   
+</br></br>
+
+
+    
+<div class="row">
+        <div class="col-lg-3">
+         <label  for="password">password :</label></div>
+         <div class="col-lg-3" >{{auth.password}}</div>
+     </div>
+    
+ </br></br>
+
+ <div class="row">
+        <div class="col-lg-3">
+         <label  for="username">First Name :</label></div>
+         <div class="col-lg-3" >{{auth.first_name}}</div>
+     </div>
+    
+ </br></br>
+
+ <div class="row">
+        <div class="col-lg-3">
+         <label  for="username">Last Name :</label></div>
+         <div class="col-lg-3" >{{auth.last_name}}</div>
+     </div>
+    
+ </br></br>
+    
+ <div class="row">
+        <div class="col-lg-3">
+         <label  for="username">Email Id :</label></div>
+         <div class="col-lg-3" >{{auth.email}}</div>
+     </div>
+    
+ </br></br>
+
+</div>
+   
+
+</br>
+
+</br>
+
+    <div class="form-group">       
+        
+     <input type="submit" name="register"   class="btn btn-primary" style="margin-left: 22em" value="REGISTER">
+        
+     </div>
+
+    </div>
+
+    
+    </form>
+
+{% endif %}-->
+{% load widget_tweaks %}
+
+{% if registered %}
+
+<div class="container">
+    <div style="text-align: center">
+       <h1 style="margin-top: 4em;"> SUCCESSFULLY REGISTERED!<h1>
+    <a href="{% url "codefundo:main_page" %}" type="button" class="btn btn-primary"  > Go to Main Page!</a>
+</div>
+
+{% else %}
+<div class="container">
+    <h1>Sign Up! </h1><BR>
+<form method="POST" nonvalidate action="/codefundo/user_signup/" enctype="multipart/form-data">{% csrf_token %}
+  {% csrf_token %}
+
+  {% for hidden_field in auth.hidden_fields %}
+    {{ hidden_field }}
+  {% endfor %}
+
+  {% if auth.non_field_errors %}
+    <div class="alert alert-danger" role="alert">
+      {% for error in auth.non_field_errors %}
+        {{ error }}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% for field in auth.visible_fields %}
+    <div class="form-group">
+      {{ field.label_tag }}
+
+      {% if auth.is_bound %}
+        {% if field.errors %}
+          {% render_field field class="form-control is-invalid" %}
+          {% for error in field.errors %}
+            <div class="invalid-feedback">
+              {{ error }}
+            </div>
+          {% endfor %}
+        {% else %}
+          {% render_field field class="form-control is-valid" %}
+        {% endif %}
+      {% else %}
+        {% render_field field class="form-control" %}
+      {% endif %}
+
+      {% if field.help_text %}
+        <small class="form-text text-muted">{{ field.help_text }}</small>
+      {% endif %}
+    </div>
+  {% endfor %}
+
+  <button type="submit" class="btn btn-primary">Submit </button>
+</form>
+</div>
+
+{% endif %}
+
+{% endblock %}

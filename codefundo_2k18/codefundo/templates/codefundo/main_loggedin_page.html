@@ -1,0 +1,52 @@
+{% extends "codefundo/base.html" %}
+{% block main_content %}
+{% load staticfiles %}   
+
+ 
+
+
+       
+<nav class="navbar navbar-default" >
+    <div class="container">
+    <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                  </button>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+     <li>   <a href="{% url "codefundo:user_logout" %}" class="dropdown" >logout</a></li>
+    
+     </ul> 
+    </div>
+</nav>
+
+<div class="container">
+            <form  action="/codefundo/main_log_page/" method="POST">
+          
+                {% csrf_token %}
+       {{ form.non_field_errors }}
+
+
+
+
+           fund: <br> {{form.fund}}<br><br>
+           
+      
+         total fund till now:{{sum}}
+        
+
+<br>
+                <input class="btn btn-primary" type="submit" value="submit">   
+            </form>   
+ 
+    </div>
+   
+ 
+    </div>
+</div>
+
+
+   {% endblock %}
